@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWXTCH - Makeup Product Finder</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="light-mode">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h1>SWXTCH</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/" class="active">Home</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li>
+                    <button id="theme-toggle" class="theme-toggle">
+                        <i class="fas fa-moon dark-icon"></i>
+                        <i class="fas fa-sun light-icon"></i>
+                    </button>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="animated-background"></div>
+        
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <div class="logo-container">
+                <svg class="main-logo" width="100" height="100" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="40" fill="url(#gradient)" />
+                    <defs>
+                        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#ff9a9e" />
+                            <stop offset="100%" stop-color="#fad0c4" />
+                        </linearGradient>
+                    </defs>
+                    <text x="50" y="55" text-anchor="middle" fill="white" font-size="14" font-weight="bold">SWXTCH</text>
+                </svg>
+                <h2 class="brand-name"><strong>SWXTCH</strong> <br><h4 class="brand-tag">All Your Shades at one Place!</h4> </h2>
+            </div>
+            
+            <div class="chat-prompt">
+                <h3>What shade would you like to search?</h3>
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Search for makeup products, brands, or shades...">
+                    <button id="search-button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                
+                <div class="search-suggestions">
+                    <span class="suggestion-tag">Summer lipsticks</span>
+                    <span class="suggestion-tag">Foundation finder</span>
+                    <span class="suggestion-tag">Vegan mascara</span>
+                    <span class="suggestion-tag">Trending blush</span>
+                    <span class="suggestion-tag">Waterproof eyeliner</span>
+                    <span class="suggestion-tag">Nude eyeshadow</span>
+                    <span class="suggestion-tag">Dewy finish</span>
+                    <span class="suggestion-tag">Korean skincare</span>
+                    <span class="suggestion-tag">Matte lipsticks</span>
+                    <span class="suggestion-tag">Dark skin tones</span>
+                    <span class="suggestion-tag">Eco-friendly brands</span>
+                    <span class="suggestion-tag">Glitter collection</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filter and Results Section (Initially Hidden) -->
+        <section class="results-section" id="results-section">
+            <div class="filters-panel">
+                <h3>Filter Products</h3>
+                
+                <div class="filter-group">
+                    <h4>Brand</h4>
+                    <div id="brand-filters" class="filter-options"></div>
+                </div>
+                
+                <div class="filter-group">
+                    <h4>Price Range</h4>
+                    <div class="price-slider">
+                        <input type="range" id="price-min" min="0" max="100" value="0">
+                        <input type="range" id="price-max" min="0" max="100" value="100">
+                        <div class="price-display">
+                            <span id="price-min-display">$0</span> - 
+                            <span id="price-max-display">$100</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h4>Product Type</h4>
+                    <div id="type-filters" class="filter-options"></div>
+                </div>
+                
+                <div class="filter-group">
+                    <h4> Min. Rating</h4>
+                    <div class="rating-filter">
+                        <button class="rating-btn" data-rating="1">★</button>
+                        <button class="rating-btn" data-rating="2">★★</button>
+                        <button class="rating-btn" data-rating="3">★★★</button>
+                        <button class="rating-btn" data-rating="4">★★★★</button>
+                        <button class="rating-btn" data-rating="5">★★★★★</button>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h4>Shades</h4>
+                    <div id="shade-filters" class="filter-options"></div>
+                </div>
+                
+                <button id="clear-filters" class="clear-filters-btn">Clear All Filters</button>
+            </div>
+            
+            <div class="products-container">
+                <div class="loading-indicator" id="loading-indicator">
+                    <div class="spinner"></div>
+                    <p>Loading products...</p>
+                </div>
+                
+                <div id="products-grid" class="products-grid"></div>
+                
+                <div id="no-results" class="no-results">
+                    <i class="fas fa-search"></i>
+                    <h3>Searching for the perfect match</h3>
+                    <p>This might take a few seconds and we deserve it to be honest!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 SWXTCH. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-pinterest"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
